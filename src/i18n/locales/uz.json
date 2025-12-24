@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "movies": "Filmlar",
+    "series": "Seriallar",
+    "search": "Qidirish...",
+    "login": "Kirish"
+  },
+  "hero": {
+    "watch": "Tomosha qilish",
+    "more": "Batafsil"
+  }
+}

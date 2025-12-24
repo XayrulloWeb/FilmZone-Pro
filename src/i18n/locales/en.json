@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "home": "Home",
+    "movies": "Movies",
+    "series": "TV Shows",
+    "search": "Search movies...",
+    "login": "Login"
+  },
+  "hero": {
+    "watch": "Watch Now",
+    "more": "Details",
+    "trending": "Trending Now"
+  },
+  "catalog": {
+    "all": "See All",
+    "loadMore": "Load More",
+    "notFound": "Nothing found 😔",
+    "notFoundDesc": "Try changing filters",
+    "filters": {
+      "genres": "All Genres",
+      "popular": "Popular",
+      "rating": "Top Rated",
+      "new": "New Releases"
+    }
+  },
+  "detail": {
+    "trailer": "Watch Trailer",
+    "overview": "Overview",
+    "cast": "Top Cast",
+    "similar": "Similar",
+    "seasons": "Seasons",
+    "episodes": "Episodes",
+    "watchlist": {
+      "add": "Watchlist",
+      "added": "Added"
+    }
+  },
+  "person": {
+    "about": "Personal Info",
+    "birthday": "Birthday",
+    "place": "Place of Birth",
+    "known": "Known For",
+    "biography": "Biography",
+    "credits": "Known For"
+  },
+  "footer": {
+    "desc": "The best streaming service for movies and TV shows. All data provided by TMDB.",
+    "nav": "Navigation",
+    "help": "Help",
+    "social": "Follow Us",
+    "rights": "© 2024 FilmZone Pro. All Rights Reserved."
+  },
+  "error": {
+    "404": {
+      "title": "Page Lost in Space",
+      "desc": "Looks like you're trying to find a movie that hasn't been made yet.",
+      "btn": "Back to Home"
+    }
+  }
+}

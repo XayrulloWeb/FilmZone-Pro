@@ -1,0 +1,82 @@
+/* Импортируем Tailwind v4 */
+@import "tailwindcss";
+
+/* Подключаем шрифт Outfit */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* НАСТРОЙКИ ТЕМЫ */
+@theme {
+  /* Говорим Tailwind использовать наши CSS переменные */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Кастомные анимации */
+  --animate-fade-in: fade-in 0.5s ease-out;
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ */
+:root {
+  /* === ГЛАВНЫЙ ЦВЕТ (Меняй только HUE) === */
+  /* 
+     158 - Твой зеленый (FilmZone Classic)
+     250 - Неоновый Фиолетовый (Cyberpunk)
+     35  - Золотой/Янтарный (Premium)
+     210 - Синий (Netflix Tech)
+     340 - Розовый/Красный (Netflix)
+  */
+  --primary-hue: 158; 
+  --primary-sat: 100%;
+  
+  /* Генерируем цвета на основе HUE (HSL формат) */
+  --primary: hsl(var(--primary-hue) var(--primary-sat) 40%); 
+  --primary-foreground: #ffffff; /* Текст на кнопке */
+
+  /* Фоны (Dark Theme Deep Space) */
+  --background: #0f1014;    /* Самый темный фон */
+  --surface: #181a20;       /* Карточки, сайдбар */
+  --surface-hover: #23262f; /* Карточки при наведении */
+  
+  /* Текст */
+  --text-main: #ffffff;
+  --text-muted: #9ca3af;    /* Серый текст */
+
+  /* Радиусы скругления */
+  --radius: 0.75rem; /* 12px */
+}
+
+/* Базовые стили */
+body {
+  background-color: var(--background);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Скроллбар (чтобы было красиво) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-hover);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
