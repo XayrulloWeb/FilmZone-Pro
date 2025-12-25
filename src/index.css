@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 /* Импортируем Tailwind v4 */
 @import "tailwindcss";
 
 /* Подключаем шрифт Outfit */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 /* НАСТРОЙКИ ТЕМЫ */
 @theme {

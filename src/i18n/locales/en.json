@@ -6,6 +6,11 @@
     "search": "Search movies...",
     "login": "Login"
   },
+  "language": {
+    "ru": "Русский",
+    "en": "English",
+    "uz": "O'zbek"
+  },
   "hero": {
     "watch": "Watch Now",
     "more": "Details",
@@ -56,5 +61,27 @@
       "desc": "Looks like you're trying to find a movie that hasn't been made yet.",
       "btn": "Back to Home"
     }
+  },
+  "pages": {
+    "popular": {
+      "title": "Trending Now",
+      "topRated": "Top Rated",
+      "upcoming": "Coming Soon",
+      "action": "Action Movies"
+    },
+    "detail": {
+      "minutes": "min",
+      "notFound": "Nothing found"
+    }
+  },
+  "search": {
+    "placeholder": "Search movies, TV shows...",
+    "startSearching": "Start searching",
+    "typeToSearch": "Type to find movies and TV shows"
+  },
+  "watchlist": {
+    "title": "My Watchlist",
+    "empty": "Your watchlist is empty",
+    "emptyDesc": "Add movies and TV shows to watch later"
   }
 }

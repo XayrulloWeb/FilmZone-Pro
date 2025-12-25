@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Search, Bell, User, Menu, X, Globe ,Bookmark} from 'lucide-react';
+import { Search, Bell, User, Menu, X, Globe, Bookmark } from 'lucide-react';
 import clsx from 'clsx'; // Помогает условно добавлять классы
 import WatchlistPage from '../../pages/Watchlist';
+import SearchModal from '../search/SearchModal';
 
 const Navbar = () => {
     const { t, i18n } = useTranslation();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
     const location = useLocation();
 
     // Ссылки меню
@@ -26,14 +28,6 @@ const Navbar = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
-    // Переключение языка
-    const toggleLanguage = () => {
-        const langs = ['ru', 'en', 'uz'];
-        const current = langs.indexOf(i18n.language);
-        const next = langs[(current + 1) % langs.length];
-        i18n.changeLanguage(next);
-    };
 
     return (
         <nav
@@ -78,22 +72,52 @@ const Navbar = () => {
 
                 {/* 2. Правая часть (Иконки) */}
                 <div className="hidden md:flex items-center gap-6">
-                    {/* Язык */}
-                    <button onClick={toggleLanguage} className="flex items-center gap-1 text-text-muted hover:text-white transition uppercase text-xs font-bold">
-                        <Globe size={16} />
-                        {i18n.language}
-                    </button>
+                    {/* Язык - Выпадающее меню */}
+                    <div className="relative group">
+                        <button
+                            className="flex items-center gap-2 text-text-muted hover:text-white transition uppercase text-sm font-bold px-3 py-2 rounded-lg hover:bg-white/5"
+                        >
+                            <Globe size={18} />
+                            <span>{i18n.language}</span>
+                        </button>
+
+                        {/* Dropdown меню с языками */}
+                        <div className="absolute right-0 top-full mt-2 bg-surface/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[140px] overflow-hidden">
+                            {['ru', 'en', 'uz'].map((lang) => (
+                                <button
+                                    key={lang}
+                                    onClick={() => i18n.changeLanguage(lang)}
+                                    className={clsx(
+                                        "w-full px-4 py-3 text-left text-sm font-medium transition-colors flex items-center gap-3",
+                                        i18n.language === lang
+                                            ? "bg-primary/10 text-primary"
+                                            : "text-white hover:bg-white/5"
+                                    )}
+                                >
+                                    <span className="text-xl">{lang === 'ru' ? '🇷🇺' : lang === 'en' ? '🇬🇧' : '🇺🇿'}</span>
+                                    <span>{t(`language.${lang}`)}</span>
+                                    {i18n.language === lang && (
+                                        <span className="ml-auto text-primary">✓</span>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
 
                     {/* Поиск */}
                     <div className="relative group">
-                        <Search className="text-text-muted hover:text-primary transition cursor-pointer" size={22} />
+                        <Search
+                            onClick={() => setSearchOpen(true)}
+                            className="text-text-muted hover:text-primary transition cursor-pointer"
+                            size={22}
+                        />
                     </div>
 
                     {/* Уведомления */}
                     <Bell className="text-text-muted hover:text-primary transition cursor-pointer" size={22} />
                     <Link to="/watchlist">
                         <div className="relative group">
-                            <Bookmark className="..." />
+                            <Bookmark className="text-text-muted hover:text-primary transition cursor-pointer" size={22} />
                         </div>
                     </Link>
                     {/* Профиль (Аватар) */}
@@ -112,7 +136,7 @@ const Navbar = () => {
             {/* 4. Мобильное меню (Выезжает) */}
             <div className={clsx(
                 "md:hidden absolute top-full left-0 w-full bg-surface/95 backdrop-blur-xl border-b border-white/10 transition-all duration-300 overflow-hidden",
-                mobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                mobileMenuOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
             )}>
                 <ul className="flex flex-col p-6 gap-4">
                     {navLinks.map((link) => (
@@ -126,15 +150,38 @@ const Navbar = () => {
                             </Link>
                         </li>
                     ))}
-                    <li className="pt-4 border-t border-white/10 flex items-center justify-between">
-                        <button onClick={toggleLanguage} className="text-white uppercase font-bold flex gap-2">
-                            <Globe size={20} /> {i18n.language}
-                        </button>
+                    <li className="pt-4 border-t border-white/10">
+                        <div className="text-text-muted text-xs uppercase font-bold mb-3 flex items-center gap-2">
+                            <Globe size={16} /> {t(`language.${i18n.language}`)}
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            {['ru', 'en', 'uz'].map((lang) => (
+                                <button
+                                    key={lang}
+                                    onClick={() => {
+                                        i18n.changeLanguage(lang);
+                                        setMobileMenuOpen(false);
+                                    }}
+                                    className={clsx(
+                                        "px-4 py-2 rounded-lg text-sm font-medium transition-colors text-left flex items-center gap-3",
+                                        i18n.language === lang
+                                            ? "bg-primary text-white"
+                                            : "bg-white/5 text-white hover:bg-white/10"
+                                    )}
+                                >
+                                    <span className="text-xl">{lang === 'ru' ? '🇷🇺' : lang === 'en' ? '🇬🇧' : '🇺🇿'}</span>
+                                    <span>{t(`language.${lang}`)}</span>
+                                    {i18n.language === lang && <span className="ml-auto">✓</span>}
+                                </button>
+                            ))}
+                        </div>
                     </li>
                 </ul>
             </div>
+
+            {/* Search Modal */}
+            <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
         </nav>
     );
 };
-
 export default Navbar;

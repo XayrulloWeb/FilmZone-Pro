@@ -6,8 +6,82 @@
     "search": "Qidirish...",
     "login": "Kirish"
   },
+  "language": {
+    "ru": "Русский",
+    "en": "English",
+    "uz": "O'zbek"
+  },
   "hero": {
     "watch": "Tomosha qilish",
-    "more": "Batafsil"
+    "more": "Batafsil",
+    "trending": "Hozir trendda"
+  },
+  "catalog": {
+    "all": "Hammasini ko'rish",
+    "loadMore": "Yana yuklash",
+    "notFound": "Hech narsa topilmadi 😔",
+    "notFoundDesc": "Filtrlarni o'zgartirib ko'ring",
+    "filters": {
+      "genres": "Barcha janrlar",
+      "popular": "Mashhur",
+      "rating": "Yuqori reyting",
+      "new": "Yangiliklar"
+    }
+  },
+  "detail": {
+    "trailer": "Treyler ko'rish",
+    "overview": "Tavsif",
+    "cast": "Asosiy aktyorlar",
+    "similar": "O'xshash",
+    "seasons": "Sezonlar",
+    "episodes": "Epizodlar",
+    "watchlist": {
+      "add": "Ko'rish ro'yxati",
+      "added": "Qo'shildi"
+    }
+  },
+  "person": {
+    "about": "Shaxsiy ma'lumot",
+    "birthday": "Tug'ilgan kun",
+    "place": "Tug'ilgan joy",
+    "known": "Mashhur",
+    "biography": "Biografiya",
+    "credits": "Asosiy ishlar"
+  },
+  "footer": {
+    "desc": "Filmlar va seriallarni tomosha qilish uchun eng yaxshi servis. Barcha ma'lumotlar TMDB tomonidan taqdim etilgan.",
+    "nav": "Navigatsiya",
+    "help": "Yordam",
+    "social": "Ijtimoiy tarmoqlar",
+    "rights": "© 2024 FilmZone Pro. Barcha huquqlar himoyalangan."
+  },
+  "error": {
+    "404": {
+      "title": "Sahifa kosmosda yo'qoldi",
+      "desc": "Siz hali suratga olinmagan filmni topmoqchisiz shekilli.",
+      "btn": "Bosh sahifaga qaytish"
+    }
+  },
+  "pages": {
+    "popular": {
+      "title": "Trendda",
+      "topRated": "Yuqori reyting",
+      "upcoming": "Tez orada",
+      "action": "Jangovar filmlar"
+    },
+    "detail": {
+      "minutes": "daq",
+      "notFound": "Hech narsa topilmadi"
+    }
+  },
+  "search": {
+    "placeholder": "Filmlar va seriallarni qidirish...",
+    "startSearching": "Qidirishni boshlang",
+    "typeToSearch": "Filmlar va seriallarni topish uchun yozing"
+  },
+  "watchlist": {
+    "title": "Mening ro'yxatim",
+    "empty": "Ro'yxat bo'sh",
+    "emptyDesc": "Keyinroq tomosha qilish uchun filmlar qo'shing"
   }
 }

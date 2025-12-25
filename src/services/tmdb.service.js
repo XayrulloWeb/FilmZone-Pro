@@ -58,10 +58,8 @@ export const tmdbService = {
   },
 
   // Поиск
-  search: async (query) => {
-    const response = await api.get(`/search/multi`, {
-      params: { query }
-    });
+  search: async (type = 'multi', params = {}) => {
+    const response = await api.get(`/search/${type}`, { params });
     return response.data;
   }
 };
