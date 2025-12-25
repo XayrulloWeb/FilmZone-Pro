@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import MovieCard from './MovieCard';
 import MovieCardSkeleton from '@/components/skeletons/MovieCardSkeleton';
 
@@ -9,6 +10,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 const MovieSlider = ({ title, movies, loading, link }) => {
+  const { t } = useTranslation();
+  // Проверка на пустой массив или undefined
+  if (!loading && (!movies || movies.length === 0)) return null;
+
   return (
     <div className="mb-12 px-4 md:px-12 max-w-[1800px] mx-auto">
       {/* Заголовок с кнопкой "Смотреть всё" */}
@@ -23,7 +28,7 @@ const MovieSlider = ({ title, movies, loading, link }) => {
             to={link} 
             className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-primary transition-colors group-hover:translate-x-1 duration-300"
           >
-            Все <ChevronRight size={16} />
+            {t('catalog.all')} <ChevronRight size={16} />
           </Link>
         )}
       </div>
@@ -49,7 +54,7 @@ const MovieSlider = ({ title, movies, loading, link }) => {
                 <MovieCardSkeleton />
               </SwiperSlide>
             ))
-          : movies.map((movie) => (
+          : (movies || []).map((movie) => (
               <SwiperSlide key={movie.id} className="!w-[140px] md:!w-[180px] lg:!w-[220px]">
                 <MovieCard movie={movie} />
               </SwiperSlide>

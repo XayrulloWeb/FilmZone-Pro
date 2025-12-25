@@ -43,6 +43,7 @@ const Img = ({ src, className, alt, size = 'w500', ...props }) => {
           loading="lazy"
           onLoad={handleLoad}
           onError={handleError}
+          decoding="async"
           className={clsx(
             "w-full h-full object-cover transition-all duration-700 ease-in-out",
             isLoaded ? "opacity-100 scale-100 blur-0" : "opacity-0 scale-105 blur-lg"

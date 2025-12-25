@@ -33,7 +33,7 @@ const Detail = ({ category = 'movie' }) => {
    // SEO Заголовок
    const pageTitle = item 
       ? `${item.title || item.name} (${(item.release_date || item.first_air_date)?.split('-')[0]})` 
-      : 'Загрузка...';
+      : t('detail.loading');
    useDocumentTitle(pageTitle);
 
    // Загрузка данных
@@ -47,12 +47,13 @@ const Detail = ({ category = 'movie' }) => {
             setItem(response);
          } catch (err) {
             console.error(err);
+            addToast(t('pages.detail.notFound'), 'error');
          } finally {
             setLoading(false);
          }
       };
       getDetail();
-   }, [category, id, i18n.language]);
+   }, [category, id, i18n.language, addToast, t]);
 
    // Сохранение в историю
    useEffect(() => {
@@ -86,21 +87,21 @@ const Detail = ({ category = 'movie' }) => {
    // Функция "Поделиться"
    const handleShare = async () => {
       const shareData = {
-        title: `Смотреть ${title}`,
-        text: `Посмотри этот фильм на FilmZone: ${title}`,
+        title: `${t('detail.watchOnline')} ${title}`,
+        text: `${t('detail.watchOnline')} ${title} - FilmZone`,
         url: window.location.href,
       };
 
       if (navigator.share) {
         try {
           await navigator.share(shareData);
-          addToast('Ссылка отправлена', 'success');
+          addToast(t('detail.linkSent'), 'success');
         } catch (err) {
            // Отмена шаринга
         }
       } else {
         navigator.clipboard.writeText(window.location.href);
-        addToast('Ссылка скопирована!', 'success');
+        addToast(t('detail.linkCopied'), 'success');
       }
    };
 
@@ -149,7 +150,7 @@ const Detail = ({ category = 'movie' }) => {
                      className="w-full mt-3 bg-primary text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:brightness-110 transition shadow-lg shadow-primary/20"
                   >
                      <PlayCircle fill="currentColor" size={24} />
-                     Смотреть онлайн
+                     {t('detail.watchOnline')}
                   </button>
                </div>
 
@@ -198,7 +199,7 @@ const Detail = ({ category = 'movie' }) => {
                         className="flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 bg-surface hover:bg-surface-hover text-white transition-all font-bold"
                      >
                         <Share2 size={20} />
-                        Поделиться
+                        {t('detail.share')}
                      </button>
                   </div>
 

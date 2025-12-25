@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { ChevronDown, Calendar, Star, Play } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { tmdbService } from '@/services/tmdb.service';
 import { useParams } from 'react-router-dom'; // Нам нужен ID сериала из URL
 import Img from '@/components/common/Img';
 import clsx from 'clsx';
 
 const SeasonList = ({ seasons }) => {
+  const { t } = useTranslation();
   const { id: tvId } = useParams(); // Берем ID сериала из URL
   
   // Фильтруем "Сезон 0" (спецвыпуски), обычно они не нужны
@@ -45,7 +47,7 @@ const SeasonList = ({ seasons }) => {
     <div className="mt-16">
       <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
          <div className="w-1.5 h-8 bg-primary rounded-full shadow-[0_0_15px_rgba(var(--primary),0.5)]"></div>
-         Сезоны и серии
+         {t('seasons.title')}
          <span className="text-text-muted text-lg font-normal opacity-60">({validSeasons.length})</span>
       </h3>
 
@@ -83,7 +85,7 @@ const SeasonList = ({ seasons }) => {
                     </h4>
                     <div className="flex items-center gap-3 text-sm text-text-muted mt-1">
                        <span className="flex items-center gap-1">
-                          <Play size={14} /> {season.episode_count} Эпизодов
+                          <Play size={14} /> {season.episode_count} {t('seasons.episodes')}
                        </span>
                        {season.air_date && (
                          <span className="flex items-center gap-1">
@@ -134,7 +136,7 @@ const SeasonList = ({ seasons }) => {
                                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
                                 <div className="absolute top-2 left-2 bg-black/60 backdrop-blur px-2 py-0.5 rounded text-xs font-bold text-white">
-                                   Ep {ep.episode_number}
+                                   {t('seasons.ep')} {ep.episode_number}
                                 </div>
                              </div>
 
@@ -152,7 +154,7 @@ const SeasonList = ({ seasons }) => {
                                 </div>
                                 
                                 <p className="text-text-muted text-sm line-clamp-2 md:line-clamp-3 mb-2 font-light">
-                                   {ep.overview || "Описание эпизода отсутствует."}
+                                   {ep.overview || ""}
                                 </p>
 
                                 <div className="flex items-center gap-4 text-xs text-text-muted/60">

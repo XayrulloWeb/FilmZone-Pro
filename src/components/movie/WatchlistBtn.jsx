@@ -1,10 +1,12 @@
 import { useWatchlistStore } from '@/store/watchlistStore';
 import { Plus, Check } from 'lucide-react';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 import { useToastStore } from '@/components/common/Toast'; // Импорт
 
 const WatchlistBtn = ({ movie, className }) => {
+  const { t } = useTranslation();
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlistStore();
   const { addToast } = useToastStore(); // Хук
   const isAdded = isInWatchlist(movie.id);
@@ -15,10 +17,10 @@ const WatchlistBtn = ({ movie, className }) => {
     
     if (isAdded) {
       removeFromWatchlist(movie.id);
-      addToast('Удалено из списка', 'info'); // Уведомление
+      addToast(t('watchlistBtn.removed'), 'info'); // Уведомление
     } else {
       addToWatchlist(movie);
-      addToast('Добавлено в "Буду смотреть"', 'success'); // Уведомление
+      addToast(t('watchlistBtn.addedMsg'), 'success'); // Уведомление
     }
   };
 
@@ -34,7 +36,7 @@ const WatchlistBtn = ({ movie, className }) => {
        )}
     >
        {isAdded ? <Check size={20} /> : <Plus size={20} />}
-       {isAdded ? "В списке" : "Буду смотреть"}
+       {isAdded ? t('watchlistBtn.added') : t('watchlistBtn.add')}
     </button>
   );
 };

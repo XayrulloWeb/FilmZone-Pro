@@ -1,9 +1,12 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, PlayCircle, Calendar, Tv } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Img from '@/components/common/Img';
 import clsx from 'clsx';
 
-const MovieCard = ({ movie }) => {
+const MovieCard = memo(({ movie }) => {
+  const { t } = useTranslation();
   const isTv = movie.media_type === 'tv' || (!movie.title && movie.name);
   const link = isTv ? `/tv/${movie.id}` : `/movie/${movie.id}`;
   const title = movie.title || movie.name;
@@ -55,7 +58,7 @@ const MovieCard = ({ movie }) => {
            <div className="flex items-center gap-2 text-xs text-primary font-bold mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75 transform translate-y-2 group-hover:translate-y-0">
               <span>{year}</span>
               <span className="w-1 h-1 rounded-full bg-white/50" />
-              <span>{isTv ? 'Сериал' : 'Фильм'}</span>
+              <span>{isTv ? t('movieCard.tv') : t('movieCard.movie')}</span>
               {rating && (
                 <>
                    <span className="w-1 h-1 rounded-full bg-white/50" />
@@ -81,6 +84,8 @@ const MovieCard = ({ movie }) => {
       </div>
     </Link>
   );
-};
+});
+
+MovieCard.displayName = 'MovieCard';
 
 export default MovieCard;

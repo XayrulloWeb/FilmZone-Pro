@@ -37,8 +37,8 @@ const Footer = () => {
             <div>
               <h4 className="text-white font-bold mb-4">{t('footer.help')}</h4>
               <ul className="space-y-2 text-sm text-text-muted">
-                <li><Link to="/about" className="hover:text-primary transition">{t('footer.help')}</Link></li>
-                <li><Link to="/contact" className="hover:text-primary transition">{t('nav.home')}</Link></li>
+                <li><Link to="/about" className="hover:text-primary transition">{t('footer.about')}</Link></li>
+                <li><Link to="/contact" className="hover:text-primary transition">{t('footer.contact')}</Link></li>
                 <li><Link to="/faq" className="hover:text-primary transition">FAQ</Link></li>
               </ul>
             </div>

@@ -1,18 +1,20 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Compass, Search, User, Bookmark } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { useState } from 'react';
 import SearchModal from '@/components/search/SearchModal'; // Импорт поиска
 
 const BottomNav = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const navItems = [
-    { icon: Home, label: 'Главная', path: '/' },
-    { icon: Compass, label: 'Каталог', path: '/movies' },
-    { icon: Search, label: 'Поиск', action: () => setIsSearchOpen(true) }, // Особая кнопка
-    { icon: Bookmark, label: 'Моё', path: '/profile' },
+    { icon: Home, label: t('bottomNav.home'), path: '/' },
+    { icon: Compass, label: t('bottomNav.catalog'), path: '/movies' },
+    { icon: Search, label: t('bottomNav.search'), action: () => setIsSearchOpen(true) }, // Особая кнопка
+    { icon: Bookmark, label: t('bottomNav.my'), path: '/profile' },
   ];
 
   return (

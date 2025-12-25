@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const NotFound = () => {
+  const { t } = useTranslation();
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-background text-center px-4 relative overflow-hidden">
       {/* Пятно на фоне */}
@@ -11,16 +13,16 @@ const NotFound = () => {
       </h1>
       
       <div className="relative z-10 -mt-10 md:-mt-20">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Страница потерялась в космосе</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t('error.404.title')}</h2>
         <p className="text-text-muted mb-8 max-w-md mx-auto">
-          Кажется, вы пытаетесь найти фильм, который еще не сняли. Или ссылка сломалась.
+          {t('error.404.desc')}
         </p>
         
         <Link 
           to="/" 
           className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-all inline-block"
         >
-          Вернуться на главную
+          {t('error.404.btn')}
         </Link>
       </div>
     </div>

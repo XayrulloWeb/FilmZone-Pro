@@ -83,5 +83,155 @@
     "title": "My Watchlist",
     "empty": "Your watchlist is empty",
     "emptyDesc": "Add movies and TV shows to watch later"
+  },
+  "home": {
+    "categories": {
+      "action": "Action",
+      "comedy": "Comedy",
+      "horror": "Horror",
+      "anime": "Anime"
+    },
+    "allGenres": "All",
+    "continueWatching": "Continue Watching",
+    "top10": "Top 10 Today",
+    "bestOfAllTime": "Best of All Time",
+    "bestOfAllTimeDesc": "Discover World Cinema Masterpieces",
+    "bestOfAllTimeSub": "Top rated by critics and audiences. Watch without ads.",
+    "goToCatalog": "Go to Catalog"
+  },
+  "catalog": {
+    "all": "See All",
+    "loadMore": "Load More",
+    "notFound": "Nothing found 😔",
+    "notFoundDesc": "Try changing filters",
+    "filters": {
+      "genres": "All Genres",
+      "popular": "Popular",
+      "rating": "Top Rated",
+      "new": "New Releases"
+    },
+    "filtersBtn": "Filters",
+    "sort": "Sort By",
+    "genre": "Genre",
+    "year": "Year",
+    "rating": "Rating",
+    "popular": "Popular",
+    "topRated": "Top Rated",
+    "newReleases": "New Releases",
+    "classics": "Classics",
+    "allGenres": "All Genres",
+    "anyYear": "Any Year",
+    "resetFilters": "Reset All Filters",
+    "searchLabel": "Search:",
+    "studioLabel": "Studio:",
+    "genreLabel": "Genre:",
+    "yearLabel": "Year:",
+    "emptyState": "Nothing found",
+    "emptyStateDesc": "Try changing search parameters",
+    "clearAll": "Clear All"
+  },
+  "profile": {
+    "title": "My Profile",
+    "guest": "Guest",
+    "movieLover": "Movie Lover",
+    "watchlist": "Watchlist",
+    "history": "History",
+    "clearHistory": "Clear History",
+    "watchlistEmpty": "Your watchlist is empty",
+    "watchlistEmptyDesc": "Add movies so you don't lose them",
+    "historyEmpty": "History is empty",
+    "historyEmptyDesc": "You haven't watched anything yet"
+  },
+  "detail": {
+    "trailer": "Watch Trailer",
+    "overview": "Overview",
+    "cast": "Top Cast",
+    "similar": "Similar",
+    "seasons": "Seasons",
+    "episodes": "Episodes",
+    "watchlist": {
+      "add": "Watchlist",
+      "added": "Added"
+    },
+    "watchOnline": "Watch Online",
+    "share": "Share",
+    "loading": "Loading...",
+    "linkSent": "Link sent",
+    "linkCopied": "Link copied!"
+  },
+  "watchlistBtn": {
+    "added": "Added",
+    "add": "Add to Watchlist",
+    "removed": "Removed from list",
+    "addedMsg": "Added to Watchlist"
+  },
+  "movieCard": {
+    "tv": "TV Show",
+    "movie": "Movie"
+  },
+  "bottomNav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "search": "Search",
+    "my": "My"
+  },
+  "seasons": {
+    "title": "Seasons & Episodes",
+    "episodes": "Episodes",
+    "ep": "Ep"
+  },
+  "player": {
+    "watchOnline": "Watch Online",
+    "reload": "Reload Player",
+    "servers": {
+      "vidsrc": {
+        "name": "VidSrc",
+        "desc": "Works everywhere (ENG/RU)"
+      },
+      "kodik": {
+        "name": "Kodik",
+        "desc": "TOP-1: Dubbing + 4K"
+      },
+      "videocdn": {
+        "name": "VideoCDN",
+        "desc": "Many dubs (RU)"
+      },
+      "super": {
+        "name": "SuperEmbed",
+        "desc": "Backup (Multi)"
+      }
+    },
+    "connecting": "Connecting to {server}...",
+    "blockedWarning": "Player blocked by provider",
+    "blockedDesc": "Servers <strong>Kodik</strong> and <strong>VideoCDN</strong> don't work on local computer (<code>localhost</code>). They will work automatically when you deploy the site online and register a domain. 👉 <strong>Use VidSrc for now</strong>."
+  },
+  "static": {
+    "about": {
+      "title": "About",
+      "desc1": "<strong>FilmZone Pro</strong> is a modern online cinema created with love for cinema and technology.",
+      "desc2": "We use cutting-edge technologies (React, Tailwind, TMDB API) to provide you with the best movie watching experience on any device - from phone to 4K TV.",
+      "desc3": "All movie information (posters, descriptions, ratings) is provided by TMDB. Video content is loaded from third-party open sources.",
+      "contact": "Contact developer:"
+    },
+    "faq": {
+      "title": "FAQ (Frequently Asked Questions)",
+      "q1": "Is it free?",
+      "a1": "Yes, FilmZone Pro is completely free. We use open sources to provide content.",
+      "q2": "How to enable Russian dubbing?",
+      "a2": "In the player (Kodik/VideoCDN) there is a dropdown menu 'Translation'. Click on it and select the desired studio (LostFilm, HDRezka, etc.).",
+      "q3": "Why is the player not working?",
+      "a3": "Try switching the server in the top part of the player (e.g., to VidSrc or SuperEmbed). If you have VPN enabled, try turning it off.",
+      "q4": "Can I download a movie?",
+      "a4": "Unfortunately, we only provide online viewing."
+    }
+  },
+  "footer": {
+    "desc": "The best streaming service for movies and TV shows. All data provided by TMDB.",
+    "nav": "Navigation",
+    "help": "Help",
+    "social": "Follow Us",
+    "rights": "© 2024 FilmZone Pro. All Rights Reserved.",
+    "about": "About",
+    "contact": "Contact"
   }
 }

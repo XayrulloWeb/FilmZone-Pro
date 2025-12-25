@@ -110,7 +110,6 @@ const Catalog = ({ type = 'movie' }) => {
   // ================= 4. ЗАГРУЗКА ФИЛЬМОВ =================
   const fetchMovies = useCallback(
     async (loadMore = false) => {
-      if (loading) return;
       setLoading(true);
 
       try {
@@ -126,6 +125,11 @@ const Catalog = ({ type = 'movie' }) => {
 
         const data = await tmdbService.getMovies(type, params);
 
+        if (!data || !data.results) {
+          console.error('Invalid data received from API');
+          return;
+        }
+
         if (loadMore) {
             // Фильтруем дубликаты при подгрузке
             setItems(prev => {
@@ -134,24 +138,24 @@ const Catalog = ({ type = 'movie' }) => {
             });
             setPage(prev => prev + 1);
         } else {
-            setItems(data.results);
+            setItems(data.results || []);
             setPage(1);
         }
         
-        setTotalPages(data.total_pages);
+        setTotalPages(data.total_pages || 1);
       } catch (e) {
         console.error('Catalog error:', e);
       } finally {
         setLoading(false);
       }
     },
-    [filters, page, loading, type]
+    [filters, page, type]
   );
 
   // Триггер загрузки при смене фильтров
   useEffect(() => {
     fetchMovies(false);
-  }, [filters, type]);
+  }, [fetchMovies]);
 
   // ================= 5. INFINITE SCROLL =================
   const observerRef = useRef();
@@ -224,7 +228,7 @@ const Catalog = ({ type = 'movie' }) => {
             )}
           >
             <SlidersHorizontal size={18} />
-            <span className="hidden md:inline">Фильтры</span>
+            <span className="hidden md:inline">{t('catalog.filtersBtn')}</span>
           </button>
         </div>
 
@@ -241,17 +245,17 @@ const Catalog = ({ type = 'movie' }) => {
                 
                 {/* Сортировка */}
                 <div className="space-y-2">
-                   <label className="text-xs font-bold text-text-muted uppercase">Сортировка</label>
+                   <label className="text-xs font-bold text-text-muted uppercase">{t('catalog.sort')}</label>
                    <div className="relative">
                       <select
                         value={filters.sort_by}
                         onChange={e => updateFilter('sort_by', e.target.value)}
                         className="w-full appearance-none bg-black/20 border border-white/10 rounded-lg py-3 px-4 pr-10 text-white focus:border-primary outline-none cursor-pointer"
                       >
-                        <option value="popularity.desc">🔥 Популярные</option>
-                        <option value="vote_average.desc">⭐ Высокий рейтинг</option>
-                        <option value="primary_release_date.desc">📅 Новинки</option>
-                        <option value="primary_release_date.asc">📅 Классика</option>
+                        <option value="popularity.desc">🔥 {t('catalog.popular')}</option>
+                        <option value="vote_average.desc">⭐ {t('catalog.topRated')}</option>
+                        <option value="primary_release_date.desc">📅 {t('catalog.newReleases')}</option>
+                        <option value="primary_release_date.asc">📅 {t('catalog.classics')}</option>
                       </select>
                       <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" size={16} />
                    </div>
@@ -259,14 +263,14 @@ const Catalog = ({ type = 'movie' }) => {
 
                 {/* Жанр */}
                 <div className="space-y-2">
-                   <label className="text-xs font-bold text-text-muted uppercase">Жанр</label>
+                   <label className="text-xs font-bold text-text-muted uppercase">{t('catalog.genre')}</label>
                    <div className="relative">
                       <select
                         value={filters.with_genres}
                         onChange={e => updateFilter('with_genres', e.target.value)}
                         className="w-full appearance-none bg-black/20 border border-white/10 rounded-lg py-3 px-4 pr-10 text-white focus:border-primary outline-none cursor-pointer"
                       >
-                        <option value="">Все жанры</option>
+                        <option value="">{t('catalog.allGenres')}</option>
                         {genresList.map(g => (
                           <option key={g.id} value={g.id}>{g.name}</option>
                         ))}
@@ -277,14 +281,14 @@ const Catalog = ({ type = 'movie' }) => {
 
                 {/* Год */}
                 <div className="space-y-2">
-                   <label className="text-xs font-bold text-text-muted uppercase">Год</label>
+                   <label className="text-xs font-bold text-text-muted uppercase">{t('catalog.year')}</label>
                    <div className="relative">
                       <select
                         value={filters.primary_release_year}
                         onChange={e => updateFilter('primary_release_year', e.target.value)}
                         className="w-full appearance-none bg-black/20 border border-white/10 rounded-lg py-3 px-4 pr-10 text-white focus:border-primary outline-none cursor-pointer"
                       >
-                        <option value="">Любой год</option>
+                        <option value="">{t('catalog.anyYear')}</option>
                         {years.map(y => (
                           <option key={y} value={y}>{y}</option>
                         ))}
@@ -296,7 +300,7 @@ const Catalog = ({ type = 'movie' }) => {
                 {/* Рейтинг */}
                 <div className="space-y-3">
                    <div className="flex justify-between">
-                      <label className="text-xs font-bold text-text-muted uppercase">Рейтинг</label>
+                      <label className="text-xs font-bold text-text-muted uppercase">{t('catalog.rating')}</label>
                       <span className="text-xs font-bold text-yellow-500 bg-yellow-500/10 px-2 rounded">
                           &gt; {filters['vote_average.gte']}
                       </span>
@@ -323,7 +327,7 @@ const Catalog = ({ type = 'movie' }) => {
                     onClick={resetAll}
                     className="text-sm text-text-muted hover:text-white transition-colors underline decoration-dotted"
                   >
-                    Сбросить все фильтры
+                    {t('catalog.resetFilters')}
                   </button>
                 </div>
 
@@ -341,25 +345,25 @@ const Catalog = ({ type = 'movie' }) => {
             <div className="flex flex-wrap gap-3 mb-8 animate-in fade-in slide-in-from-top-2">
                 {filters.query && (
                     <div className="badge bg-primary/20 text-primary border border-primary/50 px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2">
-                        Поиск: {filters.query}
+                        {t('catalog.searchLabel')} {filters.query}
                         <X size={14} className="cursor-pointer hover:scale-125 transition-transform" onClick={() => setSearchInput('')} />
                     </div>
                 )}
                 {filters.company && (
                     <div className="badge bg-white/10 text-white border border-white/20 px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2 uppercase tracking-wide">
-                        Студия: {filters.company}
+                        {t('catalog.studioLabel')} {filters.company}
                         <X size={14} className="cursor-pointer hover:scale-125 transition-transform" onClick={() => updateFilter('company', '')} />
                     </div>
                 )}
                 {filters.with_genres && (
                     <div className="badge bg-surface text-text-muted border border-white/10 px-4 py-1.5 rounded-full text-sm flex items-center gap-2">
-                        Жанр: {genresList.find(g => String(g.id) === String(filters.with_genres))?.name || filters.with_genres}
+                        {t('catalog.genreLabel')} {genresList.find(g => String(g.id) === String(filters.with_genres))?.name || filters.with_genres}
                         <X size={14} className="cursor-pointer hover:text-white" onClick={() => updateFilter('with_genres', '')} />
                     </div>
                 )}
                 {filters.primary_release_year && (
                     <div className="badge bg-surface text-text-muted border border-white/10 px-4 py-1.5 rounded-full text-sm flex items-center gap-2">
-                        Год: {filters.primary_release_year}
+                        {t('catalog.yearLabel')} {filters.primary_release_year}
                         <X size={14} className="cursor-pointer hover:text-white" onClick={() => updateFilter('primary_release_year', '')} />
                     </div>
                 )}
@@ -387,9 +391,9 @@ const Catalog = ({ type = 'movie' }) => {
         {!loading && items.length === 0 && (
            <div className="flex flex-col items-center justify-center py-20 text-center opacity-70">
               <Search size={48} className="mb-4 text-text-muted" />
-              <h3 className="text-xl font-bold text-white">Ничего не найдено</h3>
-              <p className="text-text-muted">Попробуйте изменить параметры поиска</p>
-              <button onClick={resetAll} className="mt-4 text-primary font-bold hover:underline">Очистить всё</button>
+              <h3 className="text-xl font-bold text-white">{t('catalog.emptyState')}</h3>
+              <p className="text-text-muted">{t('catalog.emptyStateDesc')}</p>
+              <button onClick={resetAll} className="mt-4 text-primary font-bold hover:underline">{t('catalog.clearAll')}</button>
            </div>
         )}
 

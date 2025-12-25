@@ -10,7 +10,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle';
 
 const Profile = () => {
   const { t } = useTranslation();
-  useDocumentTitle('Мой профиль');
+  useDocumentTitle(t('profile.title'));
   
   const [activeTab, setActiveTab] = useState('watchlist'); // 'watchlist' | 'history'
 
@@ -21,7 +21,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <PageHeader title={t('nav.home') === 'Home' ? 'My Profile' : 'Мой профиль'}>
+      <PageHeader title={t('profile.title')}>
          {/* Аватарка и имя (Заглушка) */}
          <div className="flex flex-col items-center mt-6">
             <div className="w-24 h-24 rounded-full bg-surface border-2 border-primary p-1">
@@ -29,8 +29,8 @@ const Profile = () => {
                   <User size={40} className="text-text-muted" />
                </div>
             </div>
-            <h2 className="text-white text-xl font-bold mt-4">Гость</h2>
-            <p className="text-text-muted text-sm">Любитель кино</p>
+            <h2 className="text-white text-xl font-bold mt-4">{t('profile.guest')}</h2>
+            <p className="text-text-muted text-sm">{t('profile.movieLover')}</p>
          </div>
       </PageHeader>
 
@@ -49,7 +49,7 @@ const Profile = () => {
                 )}
               >
                  <Bookmark size={18} />
-                 <span>Буду смотреть</span>
+                 <span>{t('profile.watchlist')}</span>
                  <span className="bg-white/20 text-xs px-2 py-0.5 rounded-full ml-1">{watchlist.length}</span>
               </button>
 
@@ -61,7 +61,7 @@ const Profile = () => {
                 )}
               >
                  <Clock size={18} />
-                 <span>История</span>
+                 <span>{t('profile.history')}</span>
                  <span className="bg-white/20 text-xs px-2 py-0.5 rounded-full ml-1">{history.length}</span>
               </button>
            </div>
@@ -74,7 +74,7 @@ const Profile = () => {
                 onClick={clearHistory}
                 className="text-red-500 hover:text-red-400 text-sm flex items-center gap-2 transition-colors"
               >
-                 <Trash2 size={16} /> Очистить историю
+                 <Trash2 size={16} /> {t('profile.clearHistory')}
               </button>
            </div>
         )}
@@ -91,14 +91,14 @@ const Profile = () => {
             {activeTab === 'watchlist' ? (
                <>
                   <Bookmark size={48} className="mb-4 text-text-muted" />
-                  <h3 className="text-xl font-bold text-white">Список пуст</h3>
-                  <p className="text-text-muted">Добавляйте фильмы, чтобы не потерять</p>
+                  <h3 className="text-xl font-bold text-white">{t('profile.watchlistEmpty')}</h3>
+                  <p className="text-text-muted">{t('profile.watchlistEmptyDesc')}</p>
                </>
             ) : (
                <>
                   <Clock size={48} className="mb-4 text-text-muted" />
-                  <h3 className="text-xl font-bold text-white">История пуста</h3>
-                  <p className="text-text-muted">Вы еще ничего не смотрели</p>
+                  <h3 className="text-xl font-bold text-white">{t('profile.historyEmpty')}</h3>
+                  <p className="text-text-muted">{t('profile.historyEmptyDesc')}</p>
                </>
             )}
           </div>

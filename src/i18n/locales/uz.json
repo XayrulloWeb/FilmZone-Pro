@@ -83,5 +83,155 @@
     "title": "Mening ro'yxatim",
     "empty": "Ro'yxat bo'sh",
     "emptyDesc": "Keyinroq tomosha qilish uchun filmlar qo'shing"
+  },
+  "home": {
+    "categories": {
+      "action": "Jangari",
+      "comedy": "Komediya",
+      "horror": "Qo'rqinchli",
+      "anime": "Anime"
+    },
+    "allGenres": "Barchasi",
+    "continueWatching": "Tomosha qilishni davom ettirish",
+    "top10": "Bugun top 10",
+    "bestOfAllTime": "Barcha vaqtlarning eng yaxshisi",
+    "bestOfAllTimeDesc": "Jahon kinosining shah asarlarini kashf eting",
+    "bestOfAllTimeSub": "Tanqidchilar va tomoshabinlar tomonidan eng yuqori reyting. Reklamasiz tomosha qiling.",
+    "goToCatalog": "Katalogga o'tish"
+  },
+  "catalog": {
+    "all": "Hammasini ko'rish",
+    "loadMore": "Yana yuklash",
+    "notFound": "Hech narsa topilmadi 😔",
+    "notFoundDesc": "Filtrlarni o'zgartirib ko'ring",
+    "filters": {
+      "genres": "Barcha janrlar",
+      "popular": "Mashhur",
+      "rating": "Yuqori reyting",
+      "new": "Yangiliklar"
+    },
+    "filtersBtn": "Filtrlash",
+    "sort": "Saralash",
+    "genre": "Janr",
+    "year": "Yil",
+    "rating": "Reyting",
+    "popular": "Mashhur",
+    "topRated": "Yuqori reyting",
+    "newReleases": "Yangiliklar",
+    "classics": "Klassika",
+    "allGenres": "Barcha janrlar",
+    "anyYear": "Har qanday yil",
+    "resetFilters": "Barcha filtrlarni tozalash",
+    "searchLabel": "Qidiruv:",
+    "studioLabel": "Studiya:",
+    "genreLabel": "Janr:",
+    "yearLabel": "Yil:",
+    "emptyState": "Hech narsa topilmadi",
+    "emptyStateDesc": "Qidiruv parametrlarini o'zgartirib ko'ring",
+    "clearAll": "Hammasini tozalash"
+  },
+  "profile": {
+    "title": "Mening profilim",
+    "guest": "Mehmon",
+    "movieLover": "Kino sevuvchi",
+    "watchlist": "Ko'rish ro'yxati",
+    "history": "Tarix",
+    "clearHistory": "Tarixni tozalash",
+    "watchlistEmpty": "Ro'yxat bo'sh",
+    "watchlistEmptyDesc": "Yo'qolmasligi uchun filmlar qo'shing",
+    "historyEmpty": "Tarix bo'sh",
+    "historyEmptyDesc": "Siz hali hech narsa ko'rmadingiz"
+  },
+  "detail": {
+    "trailer": "Treyler ko'rish",
+    "overview": "Tavsif",
+    "cast": "Asosiy aktyorlar",
+    "similar": "O'xshash",
+    "seasons": "Sezonlar",
+    "episodes": "Epizodlar",
+    "watchlist": {
+      "add": "Ko'rish ro'yxati",
+      "added": "Qo'shildi"
+    },
+    "watchOnline": "Onlayn tomosha qilish",
+    "share": "Ulashish",
+    "loading": "Yuklanmoqda...",
+    "linkSent": "Havola yuborildi",
+    "linkCopied": "Havola nusxalandi!"
+  },
+  "watchlistBtn": {
+    "added": "Ro'yxatda",
+    "add": "Ko'rish ro'yxati",
+    "removed": "Ro'yxatdan olib tashlandi",
+    "addedMsg": "\"Ko'rish ro'yxati\"ga qo'shildi"
+  },
+  "movieCard": {
+    "tv": "Serial",
+    "movie": "Film"
+  },
+  "bottomNav": {
+    "home": "Bosh sahifa",
+    "catalog": "Katalog",
+    "search": "Qidirish",
+    "my": "Mening"
+  },
+  "seasons": {
+    "title": "Sezonlar va epizodlar",
+    "episodes": "Epizodlar",
+    "ep": "Ep"
+  },
+  "player": {
+    "watchOnline": "Onlayn tomosha qilish",
+    "reload": "Pleyerni qayta yuklash",
+    "servers": {
+      "vidsrc": {
+        "name": "VidSrc",
+        "desc": "Hamma joyda ishlaydi (ENG/RU)"
+      },
+      "kodik": {
+        "name": "Kodik",
+        "desc": "TOP-1: Dublyaj + 4K"
+      },
+      "videocdn": {
+        "name": "VideoCDN",
+        "desc": "Ko'p dublyajlar (RU)"
+      },
+      "super": {
+        "name": "SuperEmbed",
+        "desc": "Zaxira (Multi)"
+      }
+    },
+    "connecting": "{server}ga ulanmoqda...",
+    "blockedWarning": "Pleyer provayder tomonidan bloklangan",
+    "blockedDesc": "<strong>Kodik</strong> va <strong>VideoCDN</strong> serverlari mahalliy kompyuterdada (<code>localhost</code>) ishlamaydi. Saytni onlayn joylashtirganda va domen ro'yxatdan o'tkazganda ular avtomatik ishlaydi. 👉 <strong>Hozir VidSrc dan foydalaning</strong>."
+  },
+  "static": {
+    "about": {
+      "title": "Loyiha haqida",
+      "desc1": "<strong>FilmZone Pro</strong> — bu kino va texnologiyalarga muhabbat bilan yaratilgan zamonaviy onlayn kinoteatr.",
+      "desc2": "Biz har qanday qurilmada — telefondan 4K televizorgacha eng yaxshi kino tomosha qilish tajribasini ta'minlash uchun eng ilg'or texnologiyalardan (React, Tailwind, TMDB API) foydalanamiz.",
+      "desc3": "Barcha film ma'lumotlari (plakatlar, tavsiflar, reytinglar) TMDB xizmati tomonidan taqdim etiladi. Video kontent uchinchi tomon ochiq manbalaridan yuklanadi.",
+      "contact": "Dasturchi bilan bog'lanish:"
+    },
+    "faq": {
+      "title": "FAQ (Savollar va javoblar)",
+      "q1": "Bu bepulmi?",
+      "a1": "Ha, FilmZone Pro butunlay bepul. Biz kontentni taqdim etish uchun ochiq manbalardan foydalanamiz.",
+      "q2": "Rus dublyajini qanday yoqish mumkin?",
+      "a2": "Pleyerda (Kodik/VideoCDN) 'Tarjima' ochiladigan menyu bor. Uni bosing va kerakli studiyani tanlang (LostFilm, HDRezka va boshqalar).",
+      "q3": "Nima uchun pleyer ishlamayapti?",
+      "a3": "Pleyerning yuqori qismidagi serverni o'zgartirib ko'ring (masalan, VidSrc yoki SuperEmbed ga). Agar VPN yoqilgan bo'lsa, uni o'chirib ko'ring.",
+      "q4": "Filmlarni yuklab olish mumkinmi?",
+      "a4": "Afsuski, biz faqat onlayn tomosha qilishni ta'minlaymiz."
+    }
+  },
+  "footer": {
+    "desc": "Filmlar va seriallarni tomosha qilish uchun eng yaxshi servis. Barcha ma'lumotlar TMDB tomonidan taqdim etilgan.",
+    "nav": "Navigatsiya",
+    "help": "Yordam",
+    "social": "Ijtimoiy tarmoqlar",
+    "rights": "© 2024 FilmZone Pro. Barcha huquqlar himoyalangan.",
+    "about": "Loyiha haqida",
+    "contact": "Kontaktlar"
   }
 }

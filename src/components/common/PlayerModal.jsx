@@ -1,47 +1,50 @@
 import { useState, useEffect } from 'react';
 import { X, Server, RotateCcw, MonitorPlay, Film, Tv, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 
-// === СПИСОК СЕРВЕРОВ (БАЛАНСЕРОВ) ===
-const SERVERS = [
-  { 
-    id: 'vidsrc',
-    name: 'VidSrc', 
-    desc: 'Работает везде (ENG/RU)',
-    type: 'stable',
-    // Самый надежный для localhost. Меню озвучки: Внутри плеера (настройки)
-    getUrl: (id, type) => `https://vidsrc.xyz/embed/${type}/${id}` 
-  },
-  { 
-    id: 'kodik',
-    name: 'Kodik', 
-    desc: 'ТОП-1: Озвучка + 4K',
-    type: 'pro',
-    // Лучший в СНГ. Меню озвучки: Выпадающий список внутри плеера.
-    // ТРЕБУЕТ ОДОБРЕННЫЙ ДОМЕН!
-    getUrl: (id, type) => {
-        const kodikType = type === 'tv' ? 'serial' : 'film';
-        return `//kodik.cc/find-player?tmdbID=${id}&types=${kodikType}&prioritize_translation_type=voice`;
-    }
-  },
-  { 
-    id: 'videocdn',
-    name: 'VideoCDN', 
-    desc: 'Много озвучек (RU)',
-    type: 'pro',
-    // Тоже требует домен. Отличная альтернатива Кодику.
-    getUrl: (id, type) => `https://videocdn.tv/embed/movie?tmdb_id=${id}` 
-  },
-  {
-    id: 'super',
-    name: 'SuperEmbed',
-    desc: 'Резерв (Multi)',
-    type: 'backup',
-    getUrl: (id, type) => `https://multiembed.mov/?video_id=${id}&tmdb=1`
-  }
-];
-
 const PlayerModal = ({ active, onClose, tmdbId, title, type = 'movie' }) => {
+  const { t } = useTranslation();
+  
+  // === СПИСОК СЕРВЕРОВ (БАЛАНСЕРОВ) ===
+  const SERVERS = [
+    { 
+      id: 'vidsrc',
+      name: t('player.servers.vidsrc.name'), 
+      desc: t('player.servers.vidsrc.desc'),
+      type: 'stable',
+      // Самый надежный для localhost. Меню озвучки: Внутри плеера (настройки)
+      getUrl: (id, type) => `https://vidsrc.xyz/embed/${type}/${id}` 
+    },
+    { 
+      id: 'kodik',
+      name: t('player.servers.kodik.name'), 
+      desc: t('player.servers.kodik.desc'),
+      type: 'pro',
+      // Лучший в СНГ. Меню озвучки: Выпадающий список внутри плеера.
+      // ТРЕБУЕТ ОДОБРЕННЫЙ ДОМЕН!
+      getUrl: (id, type) => {
+          const kodikType = type === 'tv' ? 'serial' : 'film';
+          return `//kodik.cc/find-player?tmdbID=${id}&types=${kodikType}&prioritize_translation_type=voice`;
+      }
+    },
+    { 
+      id: 'videocdn',
+      name: t('player.servers.videocdn.name'), 
+      desc: t('player.servers.videocdn.desc'),
+      type: 'pro',
+      // Тоже требует домен. Отличная альтернатива Кодику.
+      getUrl: (id, type) => `https://videocdn.tv/embed/movie?tmdb_id=${id}` 
+    },
+    {
+      id: 'super',
+      name: t('player.servers.super.name'),
+      desc: t('player.servers.super.desc'),
+      type: 'backup',
+      getUrl: (id, type) => `https://multiembed.mov/?video_id=${id}&tmdb=1`
+    }
+  ];
+
   const [currentServer, setCurrentServer] = useState(0); 
   const [iframeKey, setIframeKey] = useState(0); // Ключ для жесткой перезагрузки iframe
   const [isLoading, setIsLoading] = useState(true);
@@ -62,6 +65,16 @@ const PlayerModal = ({ active, onClose, tmdbId, title, type = 'movie' }) => {
     setIsLoading(true);
     setIframeKey(prev => prev + 1);
   };
+
+  // Закрытие по ESC
+  useEffect(() => {
+    if (!active) return;
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [active, onClose]);
 
   if (!active) return null;
 
@@ -90,7 +103,7 @@ const PlayerModal = ({ active, onClose, tmdbId, title, type = 'movie' }) => {
               </div>
               <div className="min-w-0">
                  <h2 className="text-white font-bold text-lg md:text-xl truncate leading-tight tracking-tight">
-                    {title || "Смотреть онлайн"}
+                    {title || t('player.watchOnline')}
                  </h2>
                  <div className="flex items-center gap-3 text-xs font-medium mt-1">
                     <span className="text-text-muted bg-white/5 px-2 py-0.5 rounded border border-white/5 uppercase">
@@ -137,7 +150,7 @@ const PlayerModal = ({ active, onClose, tmdbId, title, type = 'movie' }) => {
               <button 
                 onClick={handleReload}
                 className="group p-3 rounded-xl bg-surface border border-white/10 text-text-muted hover:text-white hover:border-primary transition relative"
-                title="Перезагрузить плеер"
+                title={t('player.reload')}
               >
                  <RotateCcw size={20} className="group-hover:-rotate-180 transition-transform duration-500" />
               </button>
@@ -164,7 +177,7 @@ const PlayerModal = ({ active, onClose, tmdbId, title, type = 'movie' }) => {
                     </div>
                  </div>
                  <p className="mt-6 text-text-muted font-medium animate-pulse">
-                    Подключение к {server.name}...
+                    {t('player.connecting', { server: server.name })}
                  </p>
               </div>
            )}
@@ -192,13 +205,8 @@ const PlayerModal = ({ active, onClose, tmdbId, title, type = 'movie' }) => {
                     <AlertTriangle size={20} />
                 </div>
                 <div>
-                    <h4 className="text-yellow-200 font-bold text-sm mb-1">Плеер заблокирован провайдером</h4>
-                    <p className="text-yellow-200/70 text-sm leading-relaxed">
-                        Серверы <strong>Kodik</strong> и <strong>VideoCDN</strong> не работают на локальном компьютере (<code className="bg-black/20 px-1 rounded">localhost</code>). 
-                        Они заработают автоматически, когда вы выложите сайт в интернет и зарегистрируете домен. 
-                        <br/>
-                        👉 <strong>Пока используйте VidSrc</strong>.
-                    </p>
+                    <h4 className="text-yellow-200 font-bold text-sm mb-1">{t('player.blockedWarning')}</h4>
+                    <p className="text-yellow-200/70 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: t('player.blockedDesc') }} />
                 </div>
             </div>
         )}

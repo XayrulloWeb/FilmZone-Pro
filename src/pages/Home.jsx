@@ -37,11 +37,11 @@ const Home = () => {
         ]);
 
         setData({
-           trending: trend.results,
-           top10: trend.results.slice(0, 10), // Берем первые 10 трендов для топа
-           topRated: top.results,
-           tvPopular: tv.results,
-           upcoming: up.results,
+           trending: trend?.results || [],
+           top10: (trend?.results || []).slice(0, 10), // Берем первые 10 трендов для топа
+           topRated: top?.results || [],
+           tvPopular: tv?.results || [],
+           upcoming: up?.results || [],
         });
       } catch (e) {
          console.error(e);
@@ -56,7 +56,7 @@ const Home = () => {
  const categories = [
     { 
       id: 28, 
-      name: 'Боевики', 
+      name: t('home.categories.action'), 
       icon: Flame, 
       // Цвет иконки и свечения при наведении
       style: 'text-red-500 group-hover:text-red-400', 
@@ -65,7 +65,7 @@ const Home = () => {
     },
     { 
       id: 35, 
-      name: 'Комедии', 
+      name: t('home.categories.comedy'), 
       icon: Ticket, 
       style: 'text-yellow-400 group-hover:text-yellow-300', 
       border: 'group-hover:border-yellow-400/50',
@@ -73,7 +73,7 @@ const Home = () => {
     },
     { 
       id: 27, 
-      name: 'Ужасы', 
+      name: t('home.categories.horror'), 
       icon: Clapperboard, 
       style: 'text-cyan-400 group-hover:text-cyan-300', // Поменял на Cyan, чтобы было стильней на черном
       border: 'group-hover:border-cyan-400/50',
@@ -81,7 +81,7 @@ const Home = () => {
     },
     { 
       id: 16, 
-      name: 'Аниме', 
+      name: t('home.categories.anime'), 
       icon: Play, 
       style: 'text-purple-500 group-hover:text-purple-400', 
       border: 'group-hover:border-purple-500/50',
@@ -132,7 +132,7 @@ const Home = () => {
               {/* Кнопка "Все жанры" */}
               <SwiperSlide className="!w-auto">
                  <Link to="/movies" className="group flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/30 transition-all">
-                    <span className="text-white/70 group-hover:text-white font-medium text-sm">Все</span>
+                    <span className="text-white/70 group-hover:text-white font-medium text-sm">{t('home.allGenres')}</span>
                     <ChevronRight size={16} className="text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all" />
                  </Link>
               </SwiperSlide>
@@ -141,7 +141,7 @@ const Home = () => {
         {/* 3. ПРОДОЛЖИТЬ ПРОСМОТР (Если есть история) */}
         {history.length > 0 && (
            <MovieSlider 
-              title="Продолжить просмотр" 
+              title={t('home.continueWatching')} 
               movies={history} 
               loading={false}
               link="/profile" 
@@ -185,7 +185,7 @@ const Home = () => {
         <div className="px-4 md:px-10 max-w-[1800px] mx-auto">
            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3">
              <div className="w-1.5 h-8 bg-primary rounded-full shadow-[0_0_15px_rgba(var(--primary),0.5)]" />
-             Топ 10 сегодня
+             {t('home.top10')}
            </h2>
            
            <Swiper
@@ -243,19 +243,19 @@ const Home = () => {
               {/* Контент */}
               <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-16 max-w-2xl">
                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/20 text-primary rounded-lg text-sm font-bold w-fit mb-4 border border-primary/20">
-                    <TrendingUp size={16} /> Лучшее за все время
+                    <TrendingUp size={16} /> {t('home.bestOfAllTime')}
                  </div>
                  <h2 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight">
-                    Откройте шедевры мирового кино
+                    {t('home.bestOfAllTimeDesc')}
                  </h2>
                  <p className="text-text-muted text-lg mb-8 max-w-md">
-                    Топ рейтинг по версии критиков и зрителей. Смотрите без рекламы.
+                    {t('home.bestOfAllTimeSub')}
                  </p>
                  <Link 
                     to="/movies?sort=vote_average.desc"
                     className="px-8 py-4 bg-white text-black rounded-xl font-bold text-lg hover:bg-primary hover:text-white transition-all w-fit shadow-xl"
                  >
-                    Перейти в каталог
+                    {t('home.goToCatalog')}
                  </Link>
               </div>
            </div>

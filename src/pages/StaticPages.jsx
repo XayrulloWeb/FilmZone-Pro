@@ -1,16 +1,18 @@
 import PageHeader from '@/components/layout/PageHeader';
 import { ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const FAQ = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background pb-20">
-      <PageHeader title="FAQ (Вопросы и ответы)" />
+      <PageHeader title={t('static.faq.title')} />
       <div className="container mx-auto px-4 mt-8 max-w-3xl space-y-4">
         {[
-          { q: "Это бесплатно?", a: "Да, FilmZone Pro полностью бесплатен. Мы используем открытые источники для предоставления контента." },
-          { q: "Как включить русскую озвучку?", a: "В плеере (Kodik/VideoCDN) есть выпадающее меню 'Перевод'. Нажмите на него и выберите нужную студию (LostFilm, HDRezka и т.д.)." },
-          { q: "Почему не работает плеер?", a: "Попробуйте переключить сервер в верхней части плеера (например, на VidSrc или SuperEmbed). Если у вас включен VPN, попробуйте выключить его." },
-          { q: "Можно ли скачать фильм?", a: "К сожалению, мы предоставляем только онлайн-просмотр." }
+          { q: t('static.faq.q1'), a: t('static.faq.a1') },
+          { q: t('static.faq.q2'), a: t('static.faq.a2') },
+          { q: t('static.faq.q3'), a: t('static.faq.a3') },
+          { q: t('static.faq.q4'), a: t('static.faq.a4') }
         ].map((item, i) => (
           <div key={i} className="bg-surface border border-white/10 rounded-xl p-6">
             <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
@@ -25,21 +27,16 @@ export const FAQ = () => {
 };
 
 export const About = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background pb-20">
-      <PageHeader title="О проекте" />
+      <PageHeader title={t('static.about.title')} />
       <div className="container mx-auto px-4 mt-8 max-w-3xl text-text-muted text-lg leading-relaxed space-y-6">
-        <p>
-          <strong className="text-white">FilmZone Pro</strong> — это современный онлайн-кинотеатр, созданный с любовью к кинематографу и технологиям.
-        </p>
-        <p>
-          Мы используем передовые технологии (React, Tailwind, TMDB API), чтобы предоставить вам лучший опыт просмотра фильмов на любом устройстве — от телефона до 4K телевизора.
-        </p>
-        <p>
-          Вся информация о фильмах (постеры, описания, рейтинг) предоставлена сервисом TMDB. Видео-контент загружается из сторонних открытых источников.
-        </p>
+        <p dangerouslySetInnerHTML={{ __html: t('static.about.desc1') }} />
+        <p dangerouslySetInnerHTML={{ __html: t('static.about.desc2') }} />
+        <p dangerouslySetInnerHTML={{ __html: t('static.about.desc3') }} />
         <div className="p-6 bg-primary/10 border border-primary/20 rounded-xl text-white">
-           Связь с разработчиком: <a href="mailto:admin@filmzone.pro" className="underline font-bold">admin@filmzone.pro</a>
+           {t('static.about.contact')} <a href="mailto:admin@filmzone.pro" className="underline font-bold">admin@filmzone.pro</a>
         </div>
       </div>
     </div>
