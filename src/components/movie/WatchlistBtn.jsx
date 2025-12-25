@@ -2,19 +2,23 @@ import { useWatchlistStore } from '@/store/watchlistStore';
 import { Plus, Check } from 'lucide-react';
 import clsx from 'clsx';
 
+import { useToastStore } from '@/components/common/Toast'; // Импорт
+
 const WatchlistBtn = ({ movie, className }) => {
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlistStore();
-  
+  const { addToast } = useToastStore(); // Хук
   const isAdded = isInWatchlist(movie.id);
 
   const toggle = (e) => {
-    e.preventDefault(); // Чтобы не переходило по ссылке, если кнопка внутри Link
+    e.preventDefault();
     e.stopPropagation();
     
     if (isAdded) {
       removeFromWatchlist(movie.id);
+      addToast('Удалено из списка', 'info'); // Уведомление
     } else {
       addToWatchlist(movie);
+      addToast('Добавлено в "Буду смотреть"', 'success'); // Уведомление
     }
   };
 

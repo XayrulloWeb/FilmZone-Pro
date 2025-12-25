@@ -1,28 +1,48 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { tmdbService } from '@/services/tmdb.service';
-import { Play, Star, Clock, Calendar } from 'lucide-react';
+import { Play, PlayCircle, Star, Clock, Calendar, Share2 } from 'lucide-react';
+
+// Хуки и сторы
+import { useHistoryStore } from '@/store/historyStore';
+import { useToastStore } from '@/components/common/Toast'; // <--- Импорт тостов
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+
+// Компоненты
 import SeasonList from '@/components/movie/SeasonList';
 import VideoModal from '@/components/common/VideoModal';
+import PlayerModal from '@/components/common/PlayerModal'; // <--- Импорт плеера
 import MovieSlider from '@/components/movie/MovieSlider';
 import CastList from '@/components/movie/CastList';
 import WatchlistBtn from '@/components/movie/WatchlistBtn';
-import { useTranslation } from 'react-i18next';
+import Img from '@/components/common/Img';
 
-const Detail = ({ category = 'movie' }) => { // Дефолтное значение для страховки
+const Detail = ({ category = 'movie' }) => {
+   // ================== 1. ВСЕ ХУКИ (В САМОМ ВЕРХУ) ==================
    const { id } = useParams();
    const { t, i18n } = useTranslation();
+   const { addToHistory } = useHistoryStore();
+   const { addToast } = useToastStore(); // <--- 🔥 ВСТАВИЛИ СЮДА (ДО RETURN)
+   
    const [item, setItem] = useState(null);
    const [loading, setLoading] = useState(true);
    const [trailerOpen, setTrailerOpen] = useState(false);
+   const [playerOpen, setPlayerOpen] = useState(false); // <--- Состояние плеера
 
+   // SEO Заголовок
+   const pageTitle = item 
+      ? `${item.title || item.name} (${(item.release_date || item.first_air_date)?.split('-')[0]})` 
+      : 'Загрузка...';
+   useDocumentTitle(pageTitle);
+
+   // Загрузка данных
    useEffect(() => {
       const getDetail = async () => {
          setLoading(true);
-         setItem(null); // Сброс
+         setItem(null);
          window.scrollTo(0, 0);
          try {
-            // 🔥 ВАЖНО: Используем category из пропсов
             const response = await tmdbService.getDetails(category, id);
             setItem(response);
          } catch (err) {
@@ -32,28 +52,71 @@ const Detail = ({ category = 'movie' }) => { // Дефолтное значен�
          }
       };
       getDetail();
-   }, [category, id, i18n.language]); // Обновляем при смене языка
+   }, [category, id, i18n.language]);
 
-   if (loading) return <div className="h-screen w-full flex items-center justify-center"><div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>;
+   // Сохранение в историю
+   useEffect(() => {
+     if (item) {
+        addToHistory({
+           id: item.id,
+           title: item.title || item.name,
+           poster_path: item.poster_path,
+           vote_average: item.vote_average,
+           media_type: category,
+           date: new Date().toISOString()
+        });
+     }
+   }, [item, category, addToHistory]);
+
+   // ================== 2. УСЛОВНЫЕ RETURN (ПОСЛЕ ХУКОВ) ==================
+   if (loading) return (
+      <div className="h-screen w-full flex items-center justify-center">
+         <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      </div>
+   );
+   
    if (!item) return <div className="text-center pt-40 text-white">{t('pages.detail.notFound')}</div>;
 
-   // 🔥 Универсальные поля
+   // ================== 3. ЛОГИКА И РЕНДЕР ==================
    const title = item.title || item.name;
    const date = item.release_date || item.first_air_date;
-   // Длительность: у фильма runtime, у сериала episode_run_time (массив)
    const runtime = item.runtime || (item.episode_run_time?.length > 0 ? item.episode_run_time[0] : null);
-
-   // Трейлер
    const trailer = item.videos?.results?.find(vid => vid.name.includes('Trailer') || vid.name.includes('Official')) || item.videos?.results?.[0];
+
+   // Функция "Поделиться"
+   const handleShare = async () => {
+      const shareData = {
+        title: `Смотреть ${title}`,
+        text: `Посмотри этот фильм на FilmZone: ${title}`,
+        url: window.location.href,
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          addToast('Ссылка отправлена', 'success');
+        } catch (err) {
+           // Отмена шаринга
+        }
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        addToast('Ссылка скопирована!', 'success');
+      }
+   };
 
    return (
       <div className="min-h-screen bg-background pb-20">
 
          {/* 1. HERO BANNER */}
-         <div
-            className="relative w-full h-[60vh] md:h-[80vh] bg-cover bg-center bg-no-repeat bg-fixed"
-            style={{ backgroundImage: `url(${import.meta.env.VITE_TMDB_IMG}/original${item.backdrop_path})` }}
-         >
+         <div className="relative w-full h-[60vh] md:h-[80vh]">
+            <div className="absolute inset-0">
+               <Img 
+                  src={item.backdrop_path} 
+                  size="original" // 4K качество
+                  className="w-full h-full object-cover" 
+                  alt={title}
+               />
+            </div>
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
          </div>
@@ -62,21 +125,31 @@ const Detail = ({ category = 'movie' }) => { // Дефолтное значен�
          <div className="container mx-auto px-4 md:px-10 relative -mt-60 md:-mt-80 z-10">
             <div className="flex flex-col md:flex-row gap-10">
 
-               {/* ЛЕВО: Постер */}
+               {/* ЛЕВО: Постер и Кнопки */}
                <div className="shrink-0 w-full max-w-[350px] mx-auto md:mx-0">
-                  <div className="rounded-xl overflow-hidden shadow-2xl border border-white/10 group relative">
-                     <img
-                        src={`${import.meta.env.VITE_TMDB_IMG}/w500${item.poster_path}`}
+                  <div className="rounded-xl overflow-hidden shadow-2xl border border-white/10 group relative aspect-[2/3]">
+                     <Img
+                        src={item.poster_path}
                         alt={title}
-                        className="w-full h-auto object-cover"
+                        className="w-full h-full object-cover"
                      />
                   </div>
 
+                  {/* Кнопка Трейлер */}
                   <button
                      onClick={() => setTrailerOpen(true)}
-                     className="w-full mt-4 bg-primary text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:brightness-110 transition shadow-lg shadow-primary/20"
+                     className="w-full mt-4 bg-white/10 backdrop-blur-md text-white border border-white/10 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-white/20 transition"
                   >
                      <Play fill="currentColor" size={20} /> {t('detail.trailer')}
+                  </button>
+
+                  {/* 🔥 Кнопка СМОТРЕТЬ ФИЛЬМ */}
+                  <button
+                     onClick={() => setPlayerOpen(true)}
+                     className="w-full mt-3 bg-primary text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:brightness-110 transition shadow-lg shadow-primary/20"
+                  >
+                     <PlayCircle fill="currentColor" size={24} />
+                     Смотреть онлайн
                   </button>
                </div>
 
@@ -116,8 +189,17 @@ const Detail = ({ category = 'movie' }) => { // Дефолтное значен�
                      {item.overview}
                   </p>
 
-                  <div className="flex gap-4 mb-10">
+                  {/* Кнопки действий: Watchlist + Share */}
+                  <div className="flex flex-wrap gap-4 mb-10">
                      <WatchlistBtn movie={item} />
+                     
+                     <button 
+                        onClick={handleShare}
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 bg-surface hover:bg-surface-hover text-white transition-all font-bold"
+                     >
+                        <Share2 size={20} />
+                        Поделиться
+                     </button>
                   </div>
 
                   <div className="mb-10">
@@ -142,7 +224,8 @@ const Detail = ({ category = 'movie' }) => { // Дефолтное значен�
             </div>
          </div>
 
-         {/* 5. МОДАЛКА */}
+         {/* 5. МОДАЛКИ */}
+         {/* Трейлер */}
          {trailer && (
             <VideoModal
                active={trailerOpen}
@@ -150,6 +233,15 @@ const Detail = ({ category = 'movie' }) => { // Дефолтное значен�
                videoKey={trailer.key}
             />
          )}
+
+         {/* 🔥 Плеер (Фильм) */}
+         <PlayerModal
+            active={playerOpen}
+            onClose={() => setPlayerOpen(false)}
+            tmdbId={item.id}
+            title={title}
+            type={category}
+         />
 
       </div>
    );

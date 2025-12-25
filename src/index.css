@@ -38,7 +38,7 @@
      210 - Синий (Netflix Tech)
      340 - Розовый/Красный (Netflix)
   */
-  --primary-hue: 158; 
+  --primary-hue: 340; 
   --primary-sat: 100%;
   
   /* Генерируем цвета на основе HUE (HSL формат) */

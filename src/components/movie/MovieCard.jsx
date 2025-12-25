@@ -1,62 +1,84 @@
 import { Link } from 'react-router-dom';
-import { Star, Play } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Star, PlayCircle, Calendar, Tv } from 'lucide-react';
+import Img from '@/components/common/Img';
+import clsx from 'clsx';
 
 const MovieCard = ({ movie }) => {
-  // 🔥 ЛОГИКА ОПРЕДЕЛЕНИЯ: Фильм или Сериал?
-  // 1. Если явно указан media_type (приходит из поиска/трендов) - верим ему.
-  // 2. Если есть title - это фильм. Если name - это сериал.
   const isTv = movie.media_type === 'tv' || (!movie.title && movie.name);
   const link = isTv ? `/tv/${movie.id}` : `/movie/${movie.id}`;
-  
-  // Название (у фильмов title, у сериалов name)
   const title = movie.title || movie.name;
-  
-  // Дата (у фильмов release_date, у сериалов first_air_date)
   const date = movie.release_date || movie.first_air_date;
-
-  const posterUrl = movie.poster_path 
-    ? import.meta.env.VITE_TMDB_IMG + '/w500' + movie.poster_path 
-    : 'https://via.placeholder.com/500x750?text=No+Image';
+  const year = date ? date.split('-')[0] : 'TBA';
+  const rating = movie.vote_average ? movie.vote_average.toFixed(1) : null;
 
   return (
-    <Link to={link}>
-      <motion.div 
-        whileHover={{ scale: 1.05, y: -5 }} 
-        className="relative rounded-xl overflow-hidden cursor-pointer group bg-surface shadow-lg border border-white/5"
-      >
-        <div className="aspect-[2/3] w-full relative overflow-hidden">
-          <img 
-            src={posterUrl} 
-            alt={title} 
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            loading="lazy" 
-          />
-          
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <div className="bg-primary rounded-full p-3 shadow-[0_0_20px_rgba(var(--primary),0.6)] transform scale-0 group-hover:scale-100 transition-transform duration-300 delay-100">
-              <Play fill="white" className="text-white ml-1" size={24} />
-            </div>
-          </div>
-
-          <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded-md flex items-center gap-1 text-xs font-bold text-yellow-400">
-            <Star size={12} fill="currentColor" />
-            {movie.vote_average?.toFixed(1)}
-          </div>
+    <Link to={link} className="block h-full">
+      <div className="group relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface border border-white/5 transition-all duration-500 hover:shadow-[0_0_20px_rgba(var(--primary),0.4)] hover:border-primary/50 hover:-translate-y-2">
+        
+        {/* 1. ПОСТЕР (ZOOM эффект) */}
+        <div className="absolute inset-0 w-full h-full">
+           <Img 
+             src={movie.poster_path} 
+             alt={title}
+             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+           />
         </div>
 
-        <div className="p-3">
-          <h3 className="text-white font-semibold truncate text-sm md:text-base group-hover:text-primary transition-colors">
-            {title}
-          </h3>
-          <p className="text-text-muted text-xs mt-1 flex justify-between">
-            <span>{date ? date.split('-')[0] : 'N/A'}</span>
-            <span className="uppercase border border-white/10 px-1 rounded text-[10px]">
-                {isTv ? 'TV' : 'Movie'}
-            </span>
-          </p>
+        {/* 2. ГРАДИЕНТ (Для читаемости текста) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
+
+        {/* 3. БЕЙДЖИ (Рейтинг и Тип) - Сверху */}
+        <div className="absolute top-2 right-2 flex flex-col gap-1 items-end opacity-100 group-hover:opacity-0 transition-opacity duration-300">
+           {rating && (
+             <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-bold text-yellow-400 border border-white/10">
+                <Star size={10} fill="currentColor" /> {rating}
+             </div>
+           )}
+           {isTv && (
+             <div className="bg-primary/80 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] font-bold text-white uppercase tracking-wider shadow-lg">
+                TV
+             </div>
+           )}
         </div>
-      </motion.div>
+
+        {/* 4. КНОПКА PLAY (По центру при наведении) */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 scale-50 group-hover:scale-100">
+           <div className="w-14 h-14 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-[0_0_20px_rgba(var(--primary),0.6)] backdrop-blur-sm">
+              <PlayCircle size={32} fill="currentColor" className="text-white" />
+           </div>
+        </div>
+
+        {/* 5. ИНФОРМАЦИЯ (Снизу) */}
+        <div className="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+           
+           {/* Мета-инфо (появляется при ховере) */}
+           <div className="flex items-center gap-2 text-xs text-primary font-bold mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75 transform translate-y-2 group-hover:translate-y-0">
+              <span>{year}</span>
+              <span className="w-1 h-1 rounded-full bg-white/50" />
+              <span>{isTv ? 'Сериал' : 'Фильм'}</span>
+              {rating && (
+                <>
+                   <span className="w-1 h-1 rounded-full bg-white/50" />
+                   <span className="text-yellow-400 flex items-center gap-1">
+                      <Star size={10} fill="currentColor" /> {rating}
+                   </span>
+                </>
+              )}
+           </div>
+
+           {/* Заголовок */}
+           <h3 className={clsx(
+              "text-white font-bold leading-tight transition-all duration-300 line-clamp-2",
+              "group-hover:text-white group-hover:line-clamp-3" // При наведении показываем больше текста
+           )}>
+              {title}
+           </h3>
+           
+           {/* Жанры (опционально, если хочешь) */}
+           {/* <p className="text-[10px] text-text-muted mt-1 opacity-0 group-hover:opacity-100 transition-opacity truncate">Action, Drama</p> */}
+        </div>
+
+      </div>
     </Link>
   );
 };
