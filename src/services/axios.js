@@ -12,47 +12,59 @@ const getLanguageForTMDB = (lang) => {
 };
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_TMDB_URL,
+  // БЫЛО: baseURL: import.meta.env.VITE_TMDB_URL, 
+  // (который равен http://localhost:5000/api/tmdb)
+
+  // СТАЛО: Убираем /tmdb из базового пути (если есть)
+  baseURL: import.meta.env.VITE_TMDB_URL?.replace('/tmdb', '') || import.meta.env.VITE_TMDB_URL || 'http://localhost:5000/api', 
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // Если сервер молчит 10 секунд - отмена
+  timeout: 15000, 
 });
 
-// 1. ИНТЕРЦЕПТОР ЗАПРОСА (Добавляем ключ и язык)
+// 1. ИНТЕРЦЕПТОР ЗАПРОСА
 api.interceptors.request.use(async (config) => {
-  const currentLanguage = i18n.language || 'ru';
+  // Получаем актуальный язык из i18n (он обновляется при смене)
+  // Если i18n еще не инициализирован, берем из localStorage
+  let currentLanguage = 'ru';
+  try {
+    // Пытаемся получить язык из i18n (он всегда актуален)
+    currentLanguage = i18n.language || localStorage.getItem('filmzone_language') || 'ru';
+    // Убираем регион, если есть (en-US -> en)
+    if (currentLanguage.includes('-')) {
+      currentLanguage = currentLanguage.split('-')[0];
+    }
+  } catch (e) {
+    // Fallback на localStorage или 'ru'
+    currentLanguage = localStorage.getItem('filmzone_language') || 'ru';
+  }
+  
+  // 🔥 НОВОЕ: Добавляем токен, если он есть
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  
   config.params = {
     ...config.params,
-    api_key: import.meta.env.VITE_TMDB_KEY,
     language: getLanguageForTMDB(currentLanguage),
   };
   return config;
 });
-
-// 2. ИНТЕРЦЕПТОР ОТВЕТА (Логика повтора / Retry)
+// 2. ИНТЕРЦЕПТОР ОТВЕТА (Оставляем как было, retry логика полезна)
 api.interceptors.response.use(
-  (response) => response, // Если всё ок, просто возвращаем данные
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
-    // Проверяем, сколько раз мы уже пытались (если нет счетчика, ставим 0)
     originalRequest._retryCount = originalRequest._retryCount || 0;
 
-    // Если ошибка сети или 5xx (ошибка сервера) И мы пробовали меньше 3 раз
     if ((!error.response || error.response.status >= 500) && originalRequest._retryCount < 3) {
       originalRequest._retryCount += 1;
-      
-      console.warn(`Attempt ${originalRequest._retryCount} retrying request to ${originalRequest.url}...`);
-
-      // Ждем перед повтором (экспоненциальная задержка: 1сек, 2сек, 4сек)
       const delay = 1000 * originalRequest._retryCount;
       await new Promise(resolve => setTimeout(resolve, delay));
-
-      // Повторяем запрос
       return api(originalRequest);
     }
-
     return Promise.reject(error);
   }
 );

@@ -7,7 +7,9 @@ import ScrollToTop from "@/components/common/ScrollToTop";
 import ToastContainer from "@/components/common/Toast"; // Уведомления
 import BottomNav from "@/components/layout/BottomNav";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
+import { useHistoryStore } from "@/store/historyStore";
 // Страницы
+import { useWatchlistStore } from "@/store/watchlistStore";
 import { FAQ, About } from "@/pages/StaticPages";
 import Home from "@/pages/Home";
 import Catalog from "@/pages/Catalog";
@@ -16,8 +18,20 @@ import Person from "@/pages/Person";
 import Profile from "@/pages/Profile"; // Профиль
 import NotFound from "@/pages/NotFound";
 import WatchlistPage from "@/pages/Watchlist"; // Старая страница (можно оставить или убрать)
+import { useAuthStore } from "@/store/authStore";
+import { useEffect } from "react";
 
 function App() {
+  const { fetchWatchlist } = useWatchlistStore();
+  const { isAuthenticated } = useAuthStore();
+  const { fetchHistory } = useHistoryStore();
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchWatchlist();
+        fetchHistory();
+    }
+  }, [isAuthenticated, fetchWatchlist,fetchHistory]);
+
   return (
     <ErrorBoundary>
       {/* Скролл вверх при переходе */}

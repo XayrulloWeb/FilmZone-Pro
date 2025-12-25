@@ -4,7 +4,10 @@
     "movies": "Filmlar",
     "series": "Seriallar",
     "search": "Qidirish...",
-    "login": "Kirish"
+    "login": "Kirish",
+    "logout": "Chiqish",
+    "goToProfile": "Profilga o'tish",
+    "loginOrRegister": "Kirish / Ro'yxatdan o'tish"
   },
   "language": {
     "ru": "Русский",
@@ -167,7 +170,11 @@
   },
   "movieCard": {
     "tv": "Serial",
-    "movie": "Film"
+    "movie": "Film",
+    "tvShow": "Serial",
+    "movieFull": "Film",
+    "tba": "Tez orada",
+    "na": "N/A"
   },
   "bottomNav": {
     "home": "Bosh sahifa",
@@ -178,7 +185,8 @@
   "seasons": {
     "title": "Sezonlar va epizodlar",
     "episodes": "Epizodlar",
-    "ep": "Ep"
+    "ep": "Ep",
+    "minutes": "daq"
   },
   "player": {
     "watchOnline": "Onlayn tomosha qilish",
@@ -203,7 +211,8 @@
     },
     "connecting": "{server}ga ulanmoqda...",
     "blockedWarning": "Pleyer provayder tomonidan bloklangan",
-    "blockedDesc": "<strong>Kodik</strong> va <strong>VideoCDN</strong> serverlari mahalliy kompyuterdada (<code>localhost</code>) ishlamaydi. Saytni onlayn joylashtirganda va domen ro'yxatdan o'tkazganda ular avtomatik ishlaydi. 👉 <strong>Hozir VidSrc dan foydalaning</strong>."
+    "blockedDesc": "<strong>Kodik</strong> va <strong>VideoCDN</strong> serverlari mahalliy kompyuterdada (<code>localhost</code>) ishlamaydi. Saytni onlayn joylashtirganda va domen ro'yxatdan o'tkazganda ular avtomatik ishlaydi. 👉 <strong>Hozir VidSrc dan foydalaning</strong>.",
+    "proServer": "Pro Server"
   },
   "static": {
     "about": {
@@ -233,5 +242,26 @@
     "rights": "© 2024 FilmZone Pro. Barcha huquqlar himoyalangan.",
     "about": "Loyiha haqida",
     "contact": "Kontaktlar"
+  },
+  "comments": {
+    "title": "Izohlar",
+    "placeholder": "Film haqida o'ylaganlaringizni yozing...",
+    "send": "Yuborish",
+    "loginRequired": "Izoh qoldirish uchun kiring",
+    "loginDesc": "Fikringizni baham ko'ring va filmlarni do'stlar bilan muhokama qiling",
+    "loading": "Yuklanmoqda...",
+    "empty": "Hozircha izohlar yo'q. Birinchi bo'ling!",
+    "user": "Foydalanuvchi",
+    "added": "Izoh qo'shildi",
+    "error": "Yuborishda xatolik",
+    "deleteConfirm": "Izohni o'chirish?",
+    "deleted": "Izoh o'chirildi"
+  },
+  "auth": {
+    "login": "Kirish",
+    "register": "Hisob yaratish",
+    "noAccount": "Hisob yo'qmi?",
+    "hasAccount": "Allaqachon hisobingiz bormi?",
+    "signUp": "Ro'yxatdan o'tish"
   }
 }

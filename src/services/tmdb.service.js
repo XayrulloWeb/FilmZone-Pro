@@ -3,19 +3,22 @@ import api from './axios';
 export const tmdbService = {
   // Получить список трендов
   getTrending: async (type = 'movie', time = 'week') => {
-    const response = await api.get(`/trending/${type}/${time}`);
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get(`/tmdb/trending/${type}/${time}`);
     return response.data;
   },
 
   // Получить списки (popular, top_rated, upcoming)
   getList: async (type, category, params = {}) => {
-    const response = await api.get(`/${type}/${category}`, { params });
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get(`/tmdb/${type}/${category}`, { params });
     return response.data;
   },
 
   // Поиск по жанрам (обычный)
   discoverByGenre: async (genreId, page = 1) => {
-    const response = await api.get('/discover/movie', {
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get('/tmdb/discover/movie', {
       params: {
         with_genres: genreId,
         page
@@ -26,13 +29,15 @@ export const tmdbService = {
 
   // Получить данные сезона (для эпизодов)
   getSeason: async (tvId, seasonNumber) => {
-    const response = await api.get(`/tv/${tvId}/season/${seasonNumber}`);
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get(`/tmdb/tv/${tvId}/season/${seasonNumber}`);
     return response.data;
   },
 
   // Получить список жанров
   getGenres: async (type) => {
-    const response = await api.get(`/genre/${type}/list`);
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get(`/tmdb/genre/${type}/list`);
     return response.data.genres;
   },
 
@@ -40,7 +45,8 @@ export const tmdbService = {
   getMovies: async (type, params = {}) => {
     // 1. Если это поиск по тексту (Query) - сразу возвращаем результат поиска
     if (params.query && params.query.length > 0) {
-      const response = await api.get(`/search/${type}`, { params });
+      // 🔥 ДОБАВИЛИ /tmdb
+      const response = await api.get(`/tmdb/search/${type}`, { params });
       return response.data;
     }
 
@@ -90,13 +96,15 @@ export const tmdbService = {
     }
     
     // 5. Обычный запрос Discover с обновленными параметрами
-    const response = await api.get(`/discover/${type}`, { params: smartParams });
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get(`/tmdb/discover/${type}`, { params: smartParams });
     return response.data;
   },
 
   // Получить персону
   getPerson: async (id) => {
-    const response = await api.get(`/person/${id}`, {
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get(`/tmdb/person/${id}`, {
       params: { append_to_response: 'movie_credits,tv_credits,images' }
     });
     return response.data;
@@ -104,7 +112,8 @@ export const tmdbService = {
 
   // Получить детали фильма
   getDetails: async (type, id) => {
-    const response = await api.get(`/${type}/${id}`, {
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get(`/tmdb/${type}/${id}`, {
       params: { append_to_response: 'videos,credits,images,similar' }
     });
     return response.data;
@@ -112,8 +121,9 @@ export const tmdbService = {
 
   // Глобальный поиск (для SearchModal)
   search: async (type = 'multi', params = {}) => {
-    const response = await api.get(`/search/${type}`, { params });
+    // 🔥 ДОБАВИЛИ /tmdb
+    const response = await api.get(`/tmdb/search/${type}`, { params });
     return response.data;
-  }
+  },
 };
 export default tmdbService;

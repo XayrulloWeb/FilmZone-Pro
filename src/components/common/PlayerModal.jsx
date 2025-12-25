@@ -111,7 +111,7 @@ const PlayerModal = ({ active, onClose, tmdbId, title, type = 'movie' }) => {
                     </span>
                     {server.type === 'pro' && (
                         <span className="flex items-center gap-1 text-green-400">
-                            <ShieldCheck size={12} /> Pro Сервер
+                            <ShieldCheck size={12} /> {t('player.proServer')}
                         </span>
                     )}
                  </div>

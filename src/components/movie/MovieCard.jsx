@@ -11,7 +11,7 @@ const MovieCard = memo(({ movie }) => {
   const link = isTv ? `/tv/${movie.id}` : `/movie/${movie.id}`;
   const title = movie.title || movie.name;
   const date = movie.release_date || movie.first_air_date;
-  const year = date ? date.split('-')[0] : 'TBA';
+  const year = date ? date.split('-')[0] : t('movieCard.tba');
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : null;
 
   return (

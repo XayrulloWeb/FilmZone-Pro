@@ -20,6 +20,8 @@ const HeroSlide = () => {
     const fetchMovies = async () => {
       try {
         setLoading(true);
+        // Сбрасываем активный индекс при смене языка
+        setActiveIndex(0);
         const data = await tmdbService.getTrending('movie', 'day');
         setMovies(data.results.slice(0, 4));
         setLoading(false);
@@ -73,7 +75,7 @@ const HeroSlide = () => {
 
           {/* Заголовок */}
           <motion.h1
-            key={movie.title}
+            key={`${movie.id}-${i18n.language}`}
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
@@ -84,7 +86,7 @@ const HeroSlide = () => {
 
           {/* Мета-информация */}
           <motion.div
-            key={`meta-${movie.id}`}
+            key={`meta-${movie.id}-${i18n.language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -99,7 +101,7 @@ const HeroSlide = () => {
             {/* Год */}
             <span className="flex items-center gap-2 text-white/80">
               <Calendar size={18} className="text-primary" />
-              {movie.release_date ? movie.release_date.split('-')[0] : 'N/A'}
+              {movie.release_date ? movie.release_date.split('-')[0] : t('movieCard.na')}
             </span>
 
             {/* Точка разделитель */}
@@ -113,7 +115,7 @@ const HeroSlide = () => {
 
           {/* Описание */}
           <motion.p
-            key={movie.overview}
+            key={`overview-${movie.id}-${i18n.language}`}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}

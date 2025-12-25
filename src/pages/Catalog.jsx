@@ -80,6 +80,7 @@ const Catalog = ({ type = 'movie' }) => {
     if (filters['vote_average.gte'] !== 5) params.rating = filters['vote_average.gte'];
 
     setSearchParams(params, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   // Следим за изменениями URL извне (например, клик "Назад" в браузере)
@@ -94,7 +95,7 @@ const Catalog = ({ type = 'movie' }) => {
      if (companyParam && companyParam !== filters.company) {
          setFilters(prev => ({ ...prev, company: companyParam }));
      }
-  }, [searchParams]);
+  }, [searchParams, filters.with_genres, filters.company]);
 
 
   // ================= 3. ПОИСК (DEBOUNCE) =================
@@ -105,7 +106,7 @@ const Catalog = ({ type = 'movie' }) => {
       }
     }, 600);
     return () => clearTimeout(timer);
-  }, [searchInput]);
+  }, [searchInput, filters.query]);
 
   // ================= 4. ЗАГРУЗКА ФИЛЬМОВ =================
   const fetchMovies = useCallback(

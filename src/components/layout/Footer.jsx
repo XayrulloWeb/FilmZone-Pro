@@ -39,7 +39,7 @@ const Footer = () => {
               <ul className="space-y-2 text-sm text-text-muted">
                 <li><Link to="/about" className="hover:text-primary transition">{t('footer.about')}</Link></li>
                 <li><Link to="/contact" className="hover:text-primary transition">{t('footer.contact')}</Link></li>
-                <li><Link to="/faq" className="hover:text-primary transition">FAQ</Link></li>
+                <li><Link to="/faq" className="hover:text-primary transition">{t('static.faq.title')}</Link></li>
               </ul>
             </div>
           </div>

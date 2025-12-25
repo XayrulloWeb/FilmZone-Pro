@@ -4,7 +4,10 @@
     "movies": "Movies",
     "series": "TV Shows",
     "search": "Search movies...",
-    "login": "Login"
+    "login": "Login",
+    "logout": "Logout",
+    "goToProfile": "Go to Profile",
+    "loginOrRegister": "Login / Register"
   },
   "language": {
     "ru": "Русский",
@@ -16,30 +19,6 @@
     "more": "Details",
     "trending": "Trending Now"
   },
-  "catalog": {
-    "all": "See All",
-    "loadMore": "Load More",
-    "notFound": "Nothing found 😔",
-    "notFoundDesc": "Try changing filters",
-    "filters": {
-      "genres": "All Genres",
-      "popular": "Popular",
-      "rating": "Top Rated",
-      "new": "New Releases"
-    }
-  },
-  "detail": {
-    "trailer": "Watch Trailer",
-    "overview": "Overview",
-    "cast": "Top Cast",
-    "similar": "Similar",
-    "seasons": "Seasons",
-    "episodes": "Episodes",
-    "watchlist": {
-      "add": "Watchlist",
-      "added": "Added"
-    }
-  },
   "person": {
     "about": "Personal Info",
     "birthday": "Birthday",
@@ -47,13 +26,6 @@
     "known": "Known For",
     "biography": "Biography",
     "credits": "Known For"
-  },
-  "footer": {
-    "desc": "The best streaming service for movies and TV shows. All data provided by TMDB.",
-    "nav": "Navigation",
-    "help": "Help",
-    "social": "Follow Us",
-    "rights": "© 2024 FilmZone Pro. All Rights Reserved."
   },
   "error": {
     "404": {
@@ -167,7 +139,11 @@
   },
   "movieCard": {
     "tv": "TV Show",
-    "movie": "Movie"
+    "movie": "Movie",
+    "tvShow": "TV Show",
+    "movieFull": "Movie",
+    "tba": "TBA",
+    "na": "N/A"
   },
   "bottomNav": {
     "home": "Home",
@@ -178,7 +154,8 @@
   "seasons": {
     "title": "Seasons & Episodes",
     "episodes": "Episodes",
-    "ep": "Ep"
+    "ep": "Ep",
+    "minutes": "min"
   },
   "player": {
     "watchOnline": "Watch Online",
@@ -203,7 +180,8 @@
     },
     "connecting": "Connecting to {server}...",
     "blockedWarning": "Player blocked by provider",
-    "blockedDesc": "Servers <strong>Kodik</strong> and <strong>VideoCDN</strong> don't work on local computer (<code>localhost</code>). They will work automatically when you deploy the site online and register a domain. 👉 <strong>Use VidSrc for now</strong>."
+    "blockedDesc": "Servers <strong>Kodik</strong> and <strong>VideoCDN</strong> don't work on local computer (<code>localhost</code>). They will work automatically when you deploy the site online and register a domain. 👉 <strong>Use VidSrc for now</strong>.",
+    "proServer": "Pro Server"
   },
   "static": {
     "about": {
@@ -233,5 +211,26 @@
     "rights": "© 2024 FilmZone Pro. All Rights Reserved.",
     "about": "About",
     "contact": "Contact"
+  },
+  "comments": {
+    "title": "Comments",
+    "placeholder": "Write what you think about the movie...",
+    "send": "Send",
+    "loginRequired": "Login to leave a comment",
+    "loginDesc": "Share your opinion and discuss movies with friends",
+    "loading": "Loading...",
+    "empty": "No comments yet. Be the first!",
+    "user": "User",
+    "added": "Comment added",
+    "error": "Error sending",
+    "deleteConfirm": "Delete comment?",
+    "deleted": "Comment deleted"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Create Account",
+    "noAccount": "No account?",
+    "hasAccount": "Already have an account?",
+    "signUp": "Sign Up"
   }
 }

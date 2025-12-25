@@ -175,10 +175,10 @@ const SearchModal = ({ isOpen, onClose }) => {
                                                         {title}
                                                     </h3>
                                                     <div className="flex items-center gap-2 mt-1">
-                                                        <span className="text-text-muted text-sm">{year || 'N/A'}</span>
+                                                        <span className="text-text-muted text-sm">{year || t('movieCard.na')}</span>
                                                         <span className="text-text-muted">•</span>
                                                         <span className="text-xs uppercase text-text-muted border border-white/10 px-2 py-0.5 rounded">
-                                                            {item.media_type === 'tv' ? 'TV' : 'Movie'}
+                                                            {item.media_type === 'tv' ? t('movieCard.tvShow') : t('movieCard.movieFull')}
                                                         </span>
                                                         {item.vote_average > 0 && (
                                                             <>

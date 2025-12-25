@@ -159,9 +159,9 @@ const SeasonList = ({ seasons }) => {
 
                                 <div className="flex items-center gap-4 text-xs text-text-muted/60">
                                    <span className="flex items-center gap-1">
-                                      <Calendar size={12} /> {ep.air_date || 'TBA'}
+                                      <Calendar size={12} /> {ep.air_date || t('movieCard.tba')}
                                    </span>
-                                   <span>{ep.runtime ? `${ep.runtime} мин` : ''}</span>
+                                   <span>{ep.runtime ? `${ep.runtime} ${t('seasons.minutes')}` : ''}</span>
                                 </div>
                              </div>
                           </div>
