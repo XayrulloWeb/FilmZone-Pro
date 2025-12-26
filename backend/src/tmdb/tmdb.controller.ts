@@ -3,12 +3,16 @@ import { TmdbService } from './tmdb.service';
 
 @Controller('tmdb') // Все пути начнутся с /api/tmdb
 export class TmdbController {
-  constructor(private readonly tmdbService: TmdbService) {}
+  constructor(private readonly tmdbService: TmdbService) { }
 
-  // 1. Тренды (Например: /api/tmdb/trending/movie/week)
+  // ✅ ИСПРАВЛЕНИЕ: Добавляем @Query() query и передаем его дальше
   @Get('trending/:type/:time')
-  getTrending(@Param('type') type: string, @Param('time') time: string) {
-    return this.tmdbService.get(`/trending/${type}/${time}`);
+  getTrending(
+    @Param('type') type: string,
+    @Param('time') time: string,
+    @Query() query: any // <--- Добавили это
+  ) {
+    return this.tmdbService.get(`/trending/${type}/${time}`, query); // <--- И передали сюда
   }
 
   // 2. Списки (Например: /api/tmdb/movie/popular)

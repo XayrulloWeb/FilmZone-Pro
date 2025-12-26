@@ -27,7 +27,7 @@ import { CommentsModule } from './comments/comments.module';
         password: config.get<string>('DB_PASSWORD'),
         entities: [User, Watchlist, History, Comment], // Добавляем History и Comment сюда
         database: config.get<string>('DB_NAME'),
-        synchronize: true,
+      synchronize: process.env.NODE_ENV !== 'production',
       }),
     }),
     TmdbModule,

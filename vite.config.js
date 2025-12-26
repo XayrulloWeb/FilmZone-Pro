@@ -14,4 +14,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"), // Чтобы писать import ... from '@/components'
     },
   },
+    esbuild: {
+    drop: ['console', 'debugger'], // Удалит все console.log при команде npm run build
+  },
 })
